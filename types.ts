@@ -43,12 +43,25 @@ export interface FormData {
 
 export interface GeneratedRPM {
   identifikasi: {
-    siswa: string;
+    murid: {
+      profilUmum: string;
+      kesiapanBelajar: string;
+      minat: string;
+      gayaBelajar: string;
+    };
+    materi: {
+      jenisPengetahuan: string;
+      relevansi: string;
+      tingkatKesulitan: string;
+      integrasiNilai: string;
+    };
     lintasDisiplin: string;
     kemitraan: string;
     lingkungan: string;
     pemanfaatanDigital: string;
     topik: string;
+    // Added tujuanPembelajaranSolo property to fix the property access error in App.tsx
+    tujuanPembelajaranSolo: string;
   };
   pengalamanBelajar: {
     pertemuan: Array<{

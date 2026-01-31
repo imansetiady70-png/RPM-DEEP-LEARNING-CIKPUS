@@ -4,25 +4,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generator RPM</title>
+  <title>Generator RPM - Perencanaan Pembelajaran Mendalam</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    body {
-      font-family: 'Inter', sans-serif;
-      color: black;
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    
+    /* Fallback and loading for Bookman style font */
+    @font-face {
+      font-family: 'Bookman Old Style';
+      src: local('Bookman Old Style'), local('Bookman');
     }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #0f172a;
+    }
+
+    .font-bookman {
+      font-family: 'Bookman Old Style', 'Bookman', 'Georgia', serif;
+    }
+
     @media print {
+      /* Sembunyikan semua elemen kecuali area cetak */
+      body * {
+        visibility: hidden;
+      }
+      #printable-area, #printable-area * {
+        visibility: visible;
+      }
+      #printable-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+      }
       .no-print {
-        display: none;
+        display: none !important;
+      }
+      /* Pengaturan Tabel untuk Print */
+      table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        border: 2px solid #1e3a8a !important;
+        margin-bottom: 20px !important;
+      }
+      td, th {
+        border: 1px solid #1e3a8a !important;
+        padding: 8px !important;
+        color: black !important;
+        font-size: 10pt !important;
+        background-color: transparent !important;
+      }
+      .bg-blue-50 {
+        background-color: #f0f7ff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .bg-slate-100 {
+        background-color: #f1f5f9 !important;
+        -webkit-print-color-adjust: exact;
+      }
+      h1, h2, p {
+        color: black !important;
       }
     }
     .table-rpm th, .table-rpm td {
-      border: 1px solid black;
-      padding: 0.75rem;
+      border: 1px solid #1e3a8a;
       vertical-align: top;
-      text-align: justify;
     }
   </style>
 <script type="importmap">
@@ -36,7 +88,7 @@
 }
 </script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-50">
   <div id="root"></div>
 </body>
 </html>

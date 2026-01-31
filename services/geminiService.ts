@@ -6,33 +6,40 @@ export const generateRPMContent = async (formData: FormData): Promise<GeneratedR
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const prompt = `
-    Bertindaklah sebagai konsultan pendidikan ahli Kurikulum Merdeka di Indonesia. 
-    Buatkan konten Perencanaan Pembelajaran Mendalam (RPM) berdasarkan data berikut:
+    Bertindaklah sebagai pakar kurikulum "Deep Learning" (Pembelajaran Mendalam) Indonesia. 
+    Buatkan konten Perencanaan Pembelajaran Mendalam (RPM) berdasarkan data berikut.
     
+    ATURAN BAHASA MUTLAK: 
+    - Gunakan istilah "Murid" untuk merujuk pada subjek didik.
+    - DILARANG KERAS menggunakan istilah "Siswa" atau "Peserta Didik".
+    - Ubah semua kata "Siswa" atau "Peserta Didik" yang diinput user menjadi "Murid".
+    
+    DATA INPUT:
     - Satuan Pendidikan: ${formData.schoolName}
     - Jenjang: ${formData.level} - Kelas: ${formData.grade}
-    - Semester: ${formData.semester}
     - Mata Pelajaran: ${formData.subject}
-    - Materi: ${formData.material}
+    - Materi Utama: ${formData.material}
     - Capaian Pembelajaran (CP): ${formData.cp}
-    - Tujuan Pembelajaran (TP): ${formData.tp}
-    - Dimensi Lulusan: ${formData.dimensions.join(', ')}
-    - Jumlah Pertemuan: ${formData.meetingCount}
-    - Praktik Pedagogis per Pertemuan: ${formData.meetingConfigs.map((m, i) => `Pertemuan ${i+1}: ${m.practice}`).join('; ')}
+    - Dimensi Profil Lulusan: ${formData.dimensions.join(', ')}
+    - Praktik Pedagogis: ${formData.meetingConfigs.map((m, i) => `Sesi ${i+1}: ${m.practice}`).join('; ')}
 
-    Persyaratan Khusus:
-    1. Identifikasi Siswa: Deskripsikan profil siswa yang relevan dengan jenjang dan materi secara otomatis.
-    2. Lintas Disiplin Ilmu: Tentukan mata pelajaran lain yang berkaitan.
-    3. Kemitraan: Tentukan pihak luar atau sumber belajar yang sesuai.
-    4. Lingkungan: Tentukan pengaturan kelas atau lokasi belajar.
-    5. Digital: Berikan referensi tools online yang konkret (seperti Canva, Quizizz, Padlet, dll).
-    6. Pengalaman Belajar: Harus sesuai dengan sintaks praktik pedagogis yang dipilih untuk setiap pertemuan.
-       - Memahami: Kegiatan awal (Berkesadaran, Bermakna, Menggembirakan).
-       - Mengaplikasi: Kegiatan inti mengikuti sintaks model pembelajaran (Berkesadaran, Bermakna, Menggembirakan).
-       - Refleksi: Kegiatan penutup (Berkesadaran, Bermakna, Menggembirakan).
-    7. Asesmen: Detailkan asesmen awal, proses, dan akhir secara otomatis.
+    INSTRUKSI TUJUAN PEMBELAJARAN (TP):
+    - Hasilkan Tujuan Pembelajaran (TP) yang diturunkan dari CP di atas menggunakan **Taksonomi SOLO** (Structure of Observed Learning Outcome).
+    - Pastikan TP mencakup level Relational (menghubungkan konsep) dan Extended Abstract (generalisasi ke situasi baru) untuk mendukung Pembelajaran Mendalam.
+    - Cantumkan kode level SOLO di setiap poin TP (misal: [Relational], [Extended Abstract]).
 
-    Berikan output dalam format JSON murni sesuai schema.
+    STRUKTUR OUTPUT (IDENTIFIKASI):
+    1. Identifikasi Murid: Deskripsi Profil Umum, Kesiapan Belajar, Minat, dan Gaya Belajar spesifik untuk Murid ${formData.level} kelas ${formData.grade}.
+    2. Identifikasi Materi: Deskripsi Jenis Pengetahuan, Relevansi, Tingkat Kesulitan, dan Integrasi Nilai materi "${formData.material}".
+    3. Lintas Disiplin Ilmu: Mata pelajaran kolaboratif.
+    4. Kemitraan & Lingkungan: Pihak luar dan pengaturan ruang.
+    5. Pemanfaatan Digital: Tools spesifik (Canva, Quizizz, dll).
+
+    STRUKTUR OUTPUT (PENGALAMAN BELAJAR):
+    - Komponen: Memahami (Awal), Mengaplikasi (Inti), Refleksi (Penutup).
+    - Fokus pada "Deep Learning": Berkesadaran, Bermakna, Menggembirakan.
+
+    Hasilkan output dalam format JSON sesuai schema.
   `;
 
   const response = await ai.models.generateContent({
@@ -46,14 +53,34 @@ export const generateRPMContent = async (formData: FormData): Promise<GeneratedR
           identifikasi: {
             type: Type.OBJECT,
             properties: {
-              siswa: { type: Type.STRING },
+              murid: {
+                type: Type.OBJECT,
+                properties: {
+                  profilUmum: { type: Type.STRING },
+                  kesiapanBelajar: { type: Type.STRING },
+                  minat: { type: Type.STRING },
+                  gayaBelajar: { type: Type.STRING },
+                },
+                required: ["profilUmum", "kesiapanBelajar", "minat", "gayaBelajar"]
+              },
+              materi: {
+                type: Type.OBJECT,
+                properties: {
+                  jenisPengetahuan: { type: Type.STRING },
+                  relevansi: { type: Type.STRING },
+                  tingkatKesulitan: { type: Type.STRING },
+                  integrasiNilai: { type: Type.STRING },
+                },
+                required: ["jenisPengetahuan", "relevansi", "tingkatKesulitan", "integrasiNilai"]
+              },
               lintasDisiplin: { type: Type.STRING },
               kemitraan: { type: Type.STRING },
               lingkungan: { type: Type.STRING },
               pemanfaatanDigital: { type: Type.STRING },
               topik: { type: Type.STRING },
+              tujuanPembelajaranSolo: { type: Type.STRING, description: "TP berdasarkan Taksonomi SOLO" }
             },
-            required: ["siswa", "lintasDisiplin", "kemitraan", "lingkungan", "pemanfaatanDigital", "topik"]
+            required: ["murid", "materi", "lintasDisiplin", "kemitraan", "lingkungan", "pemanfaatanDigital", "topik", "tujuanPembelajaranSolo"]
           },
           pengalamanBelajar: {
             type: Type.OBJECT,
