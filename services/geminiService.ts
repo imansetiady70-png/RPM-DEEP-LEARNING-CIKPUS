@@ -25,8 +25,10 @@ export const generateRPMContent = async (formData: FormData): Promise<GeneratedR
 
     INSTRUKSI TUJUAN PEMBELAJARAN (TP):
     - Hasilkan Tujuan Pembelajaran (TP) yang diturunkan dari CP di atas menggunakan **Taksonomi SOLO** (Structure of Observed Learning Outcome).
+    - WAJIB menghasilkan minimal 5 hingga 10 butir Tujuan Pembelajaran yang komprehensif dan terukur.
     - Pastikan TP mencakup level Relational (menghubungkan konsep) dan Extended Abstract (generalisasi ke situasi baru) untuk mendukung Pembelajaran Mendalam.
     - Cantumkan kode level SOLO di setiap poin TP (misal: [Relational], [Extended Abstract]).
+    - Sajikan dalam bentuk list/poin-poin yang rapi.
 
     STRUKTUR OUTPUT (IDENTIFIKASI):
     1. Identifikasi Murid: Deskripsi Profil Umum, Kesiapan Belajar, Minat, dan Gaya Belajar spesifik untuk Murid ${formData.level} kelas ${formData.grade}.
@@ -78,7 +80,7 @@ export const generateRPMContent = async (formData: FormData): Promise<GeneratedR
               lingkungan: { type: Type.STRING },
               pemanfaatanDigital: { type: Type.STRING },
               topik: { type: Type.STRING },
-              tujuanPembelajaranSolo: { type: Type.STRING, description: "TP berdasarkan Taksonomi SOLO" }
+              tujuanPembelajaranSolo: { type: Type.STRING, description: "TP berdasarkan Taksonomi SOLO (Wajib 5-10 butir)" }
             },
             required: ["murid", "materi", "lintasDisiplin", "kemitraan", "lingkungan", "pemanfaatanDigital", "topik", "tujuanPembelajaranSolo"]
           },
