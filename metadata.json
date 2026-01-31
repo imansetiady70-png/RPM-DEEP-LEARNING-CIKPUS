@@ -1,0 +1,5 @@
+{
+  "name": "Generator RPM ",
+  "description": "Sebuah aplikasi cerdas untuk guru dalam merancang Perencanaan Pembelajaran Mendalam (RPM) yang terstruktur sesuai standar kurikulum, lengkap dengan fitur ekspor ke Google Dokumen.",
+  "requestFramePermissions": []
+}
