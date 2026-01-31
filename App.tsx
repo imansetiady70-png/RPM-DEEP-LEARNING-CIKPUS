@@ -21,6 +21,7 @@ const App: React.FC = () => {
     principalNip: '',
     level: 'SD',
     grade: '1',
+    semester: 'Ganjil',
     subject: '',
     cp: '',
     tp: '',
@@ -187,6 +188,19 @@ const App: React.FC = () => {
                     <input required name="grade" value={formData.grade} onChange={handleInputChange} className="w-full rounded-lg border border-gray-300 p-2.5" placeholder="Misal: 10 TKJ" />
                   </div>
                 </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Semester *</label>
+                    <select name="semester" value={formData.semester} onChange={handleInputChange} className="w-full rounded-lg border border-gray-300 p-2.5">
+                      <option value="Ganjil">Ganjil</option>
+                      <option value="Genap">Genap</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">Durasi per Sesi *</label>
+                    <input required name="duration" value={formData.duration} onChange={handleInputChange} className="w-full rounded-lg border border-gray-300 p-2.5" placeholder="2 JP @45 Menit" />
+                  </div>
+                </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Mata Pelajaran *</label>
                   <input required name="subject" value={formData.subject} onChange={handleInputChange} className="w-full rounded-lg border border-gray-300 p-2.5" placeholder="Matematika / Informatika / dll" />
@@ -195,15 +209,9 @@ const App: React.FC = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Materi Utama *</label>
                   <input required name="material" value={formData.material} onChange={handleInputChange} className="w-full rounded-lg border border-gray-300 p-2.5" placeholder="Judul Materi / Bab" />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Jumlah Pertemuan *</label>
-                    <input type="number" min="1" max="10" required name="meetingCount" value={formData.meetingCount} onChange={handleMeetingCountChange} className="w-full rounded-lg border border-gray-300 p-2.5" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1">Durasi per Sesi *</label>
-                    <input required name="duration" value={formData.duration} onChange={handleInputChange} className="w-full rounded-lg border border-gray-300 p-2.5" placeholder="2 JP @45 Menit" />
-                  </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Jumlah Pertemuan *</label>
+                  <input type="number" min="1" max="10" required name="meetingCount" value={formData.meetingCount} onChange={handleMeetingCountChange} className="w-full rounded-lg border border-gray-300 p-2.5" />
                 </div>
               </div>
             </div>
@@ -322,7 +330,6 @@ const App: React.FC = () => {
                   <div className="text-center mb-10 border-b-2 border-double border-black pb-4">
                     <h1 className="text-2xl font-bold uppercase mb-1">Perencanaan Pembelajaran Mendalam (RPM)</h1>
                     <p className="font-bold text-xl uppercase tracking-widest">{formData.schoolName}</p>
-                    <p className="text-sm italic mt-2 text-gray-500 no-print">Dokumen ini dihasilkan secara cerdas oleh AI</p>
                   </div>
 
                   <table className="w-full table-rpm border-collapse border border-black text-[13px] leading-relaxed">
@@ -341,7 +348,7 @@ const App: React.FC = () => {
                       </tr>
                       <tr>
                         <td className="border border-black p-3 font-semibold">Kelas / Semester</td>
-                        <td className="border border-black p-3">{formData.grade} / {parseInt(formData.grade) <= 6 ? (parseInt(formData.grade) % 2 !== 0 ? '1 (Ganjil)' : '2 (Genap)') : (parseInt(formData.grade) <= 9 ? (parseInt(formData.grade) % 2 !== 0 ? '7 (Ganjil)' : '8 (Genap)') : '10/11/12')}</td>
+                        <td className="border border-black p-3">{formData.grade} / {formData.semester}</td>
                       </tr>
                       <tr>
                         <td className="border border-black p-3 font-semibold">Durasi / Pertemuan</td>

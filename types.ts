@@ -30,6 +30,7 @@ export interface FormData {
   principalNip: string;
   level: EducationLevel;
   grade: string;
+  semester: 'Ganjil' | 'Genap';
   subject: string;
   cp: string;
   tp: string;

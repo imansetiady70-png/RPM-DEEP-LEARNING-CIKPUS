@@ -11,6 +11,7 @@ export const generateRPMContent = async (formData: FormData): Promise<GeneratedR
     
     - Satuan Pendidikan: ${formData.schoolName}
     - Jenjang: ${formData.level} - Kelas: ${formData.grade}
+    - Semester: ${formData.semester}
     - Mata Pelajaran: ${formData.subject}
     - Materi: ${formData.material}
     - Capaian Pembelajaran (CP): ${formData.cp}
